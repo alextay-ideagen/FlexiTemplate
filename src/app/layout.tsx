@@ -5,6 +5,8 @@ import '@/styles/globals.css';
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
 import '@/styles/colors.css';
 
+import UnderlineLink from '@/components/links/UnderlineLink';
+
 import { siteConfig } from '@/constant/config';
 
 // !STARTERCONF Change these default meta
@@ -56,7 +58,20 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body>{children}</body>
+      <body>
+        <main>
+          <section className='bg-white'>
+            {children}
+
+            <footer className='absolute bottom-2 text-gray-700 flex justify-center w-full'>
+              © {new Date().getFullYear()} By{' '}
+              <UnderlineLink href='https://www.complispace.com.au/'>
+                Complispace Stark Team
+              </UnderlineLink>
+            </footer>
+          </section>
+        </main>
+      </body>
     </html>
   );
 }
