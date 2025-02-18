@@ -122,7 +122,13 @@ export default function CustomiserPanel({
       </div>
 
       {/* Main Content */}
-      <div className='flex flex-grow flex-col gap-4 lg:flex-col-reverse'>
+      <div className='flex flex-grow flex-col gap-4 lg:flex-col'>
+        {/* Customization Panel */}
+        <CustomDocEditor
+          handleCommandSubmit={handleCommandSubmit}
+          setShowOriginalContent={setShowOriginalContent}
+          showOriginalContent={showOriginalContent}
+        />
         {/* Document Viewer */}
         <div className='my-4 rounded-lg shadow-lg overflow-hidden box'>
           {/* <CustomDocViewer documentContent={documentContent} /> */}
@@ -137,12 +143,6 @@ export default function CustomiserPanel({
             }
           />
         </div>
-        {/* Customization Panel */}
-        <CustomDocEditor
-          handleCommandSubmit={handleCommandSubmit}
-          setShowOriginalContent={setShowOriginalContent}
-          showOriginalContent={showOriginalContent}
-        />
       </div>
     </div>
   );

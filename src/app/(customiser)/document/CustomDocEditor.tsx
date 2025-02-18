@@ -42,6 +42,7 @@ export default function CustomDocumentEditor({
               value={fontSize}
               onChange={handleFontSizeChange}
               placeholder='e.g., 16'
+              style={{ marginLeft: '1.5rem' }}
             />
           </label>
           <label>
@@ -51,11 +52,12 @@ export default function CustomDocumentEditor({
               value={textColor}
               onChange={handleTextColorChange}
               placeholder='e.g., blue'
+              className='ml-4'
             />
           </label>
           <label>
             Header/Footer Image Upload
-            <Input type='file' />
+            <Input type='file' className='ml-4' />
           </label>
         </div>
         <ChatInput onSend={handleCommandSubmit} />
