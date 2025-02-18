@@ -3,56 +3,62 @@ import Link from 'next/link';
 
 const docList = [
   {
-    title: 'Child Safe Program',
+    title: 'Work Safe Policies',
     author: 'Leslie Alexander',
     status: 'Draft',
     thumbnail:
       'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     lastOpened: '3h ago',
     lastOpenedDateTime: '2023-01-23T13:23Z',
+    htmlFile: 'WorkSafePolicies',
   },
   {
-    title: 'Risk Management Program',
+    title: 'Critical Incident Response Procedures',
     author: 'Michael Foster',
     status: 'Published',
     thumbnail:
       'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     lastOpened: '3h ago',
     lastOpenedDateTime: '2023-01-23T13:23Z',
+    htmlFile: 'CriticalIncident',
   },
   {
-    title: 'Work Health and Safety Program',
+    title: 'Student Duty of Care Module',
     author: 'Dries Vincent',
     status: 'Review',
     thumbnail:
       'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     lastOpened: null,
+    htmlFile: 'StudentDutyOfCareModule',
   },
   {
-    title: 'Work Safe Policies',
+    title: 'Human Resources Marketing ',
     author: 'Lindsay Walton',
     status: 'Draft',
     thumbnail:
       'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     lastOpened: '3h ago',
     lastOpenedDateTime: '2023-01-23T13:23Z',
+    htmlFile: 'HumanResourcesMarketing',
   },
   {
-    title: 'Child Protection Program',
+    title: 'Reference And Resources',
     author: 'Courtney Henry',
     status: 'Approved',
     thumbnail:
       'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     lastOpened: '3h ago',
     lastOpenedDateTime: '2023-01-23T13:23Z',
+    htmlFile: 'ReferenceAndResources',
   },
   {
-    title: 'Staff Code of Conduct',
+    title: 'Risk Rating',
     author: 'Tom Cook',
     status: 'In Progress',
     thumbnail:
       'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     lastOpened: null,
+    htmlFile: 'RiskRating',
   },
 ];
 
