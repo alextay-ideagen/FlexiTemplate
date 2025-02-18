@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 const docList = [
   {
@@ -59,42 +60,47 @@ export default function DocumentList() {
   return (
     <ul role='list' className='divide-y divide-gray-100'>
       {docList.map((document) => (
-        <li key={document.title} className='flex justify-between gap-x-6 py-5'>
-          <div className='flex min-w-0 gap-x-4'>
-            <Image
-              width='48'
-              height='48'
-              alt=''
-              src={document.thumbnail}
-              className='size-12 flex-none rounded-full bg-gray-50'
-            />
-            <div className='min-w-0 flex-auto'>
-              <p className='text-sm/6 font-semibold text-gray-900'>
-                {document.title}
-              </p>
-              <p className='mt-1 truncate text-xs/5 text-gray-500'>
-                {document.author}
-              </p>
-            </div>
-          </div>
-          <div className='hidden shrink-0 sm:flex sm:flex-col sm:items-end'>
-            <p className='text-sm/6 text-gray-900'>{document.status}</p>
-            {document.lastOpenedDateTime ? (
-              <p className='mt-1 text-xs/5 text-gray-500'>
-                Last seen{' '}
-                <time dateTime={document.lastOpenedDateTime}>
-                  {document.lastOpenedDateTime}
-                </time>
-              </p>
-            ) : (
-              <div className='mt-1 flex items-center gap-x-1.5'>
-                <div className='flex-none rounded-full bg-emerald-500/20 p-1'>
-                  <div className='size-1.5 rounded-full bg-emerald-500' />
-                </div>
-                <p className='text-xs/5 text-gray-500'>Online</p>
+        <li key={document.title}>
+          <Link
+            href='/document/AccessPolicy'
+            className='cursor-pointer flex justify-between gap-x-6 py-5 hover:bg-gray-50 px-5'
+          >
+            <div className='flex min-w-0 gap-x-4'>
+              <Image
+                width='48'
+                height='48'
+                alt=''
+                src={document.thumbnail}
+                className='size-12 flex-none rounded-full bg-gray-50'
+              />
+              <div className='min-w-0 flex-auto'>
+                <p className='text-sm/6 font-semibold text-gray-900'>
+                  {document.title}
+                </p>
+                <p className='mt-1 truncate text-xs/5 text-gray-500'>
+                  {document.author}
+                </p>
               </div>
-            )}
-          </div>
+            </div>
+            <div className='hidden shrink-0 sm:flex sm:flex-col sm:items-end'>
+              <p className='text-sm/6 text-gray-900'>{document.status}</p>
+              {document.lastOpenedDateTime ? (
+                <p className='mt-1 text-xs/5 text-gray-500'>
+                  Last seen{' '}
+                  <time dateTime={document.lastOpenedDateTime}>
+                    {document.lastOpenedDateTime}
+                  </time>
+                </p>
+              ) : (
+                <div className='mt-1 flex items-center gap-x-1.5'>
+                  <div className='flex-none rounded-full bg-emerald-500/20 p-1'>
+                    <div className='size-1.5 rounded-full bg-emerald-500' />
+                  </div>
+                  <p className='text-xs/5 text-gray-500'>Online</p>
+                </div>
+              )}
+            </div>
+          </Link>
         </li>
       ))}
     </ul>
