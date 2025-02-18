@@ -1,9 +1,5 @@
-'use client';
-
-import { Button } from '@headlessui/react';
-import { useParams } from 'next/navigation';
-import { useState } from 'react';
 import path from 'path';
+import { promises as fs } from 'fs';
 
 import CustomiserPanel from '@/app/(customiser)/document/[title]/CustomiserPanel';
 

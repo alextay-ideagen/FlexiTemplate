@@ -1,17 +1,14 @@
 'use client';
 
 import { Button } from '@headlessui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import CustomDocEditor from '@/app/(customiser)/document/CustomDocEditor';
-import dynamic from 'next/dynamic';
-const CustomDocViewer = dynamic(
-  () => import('@/app/(customiser)/document/CustomDocViewer'),
-  { ssr: false },
-);
 
-import { getUpdatedHtml } from './actions';
 import HtmlIframe from '@/app/(customiser)/document/[title]/HtmlIframe';
+import { getUpdatedHtml } from './actions';
+import { ImSpinner } from 'react-icons/im';
+import { Loader, Loader2 } from 'lucide-react';
 
 export default function CustomiserPanel({
   originalDocument,
@@ -21,15 +18,18 @@ export default function CustomiserPanel({
   title?: string;
 }) {
   const [loading, setLoading] = useState(false);
+  const [exportLoading, setExportLoading] = useState(false);
+  const [showOriginalContent, setShowOriginalContent] = useState(false);
   const [documentContent, setDocumentContent] = useState(
-    originalDocument ??
-      `
-    <h1>Something went wrong</h1>
-    <p>Please try again later.</p>
-  `,
+    originalDocument ?? '',
   );
 
   const handleCommandSubmit = async (message: string) => {
+    if (!message) return;
+    if (!documentContent) return;
+    if (loading) return;
+    setLoading(true);
+
     console.log('Processing command:', message);
     const result = await getUpdatedHtml({
       prompt: message,
@@ -38,10 +38,14 @@ export default function CustomiserPanel({
     console.log('Received response from server:', result);
 
     setDocumentContent(result);
+
+    setLoading(false);
   };
 
   const handleDownloadPDF = async () => {
-    setLoading(true);
+    if (exportLoading) return;
+
+    setExportLoading(true);
 
     try {
       const response = await fetch('/api/generate-pdf', {
@@ -52,7 +56,10 @@ export default function CustomiserPanel({
         }),
       });
 
-      if (!response.ok) throw new Error('Failed to generate PDF');
+      if (!response.ok) {
+        setLoading(false);
+        throw new Error('Failed to generate PDF');
+      }
 
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
@@ -69,29 +76,74 @@ export default function CustomiserPanel({
       console.error('PDF download error:', error);
     }
 
-    setLoading(false);
+    setExportLoading(false);
   };
-
+  const isOriginal = originalDocument === documentContent;
   return (
     <div className='p-6 bg-gray-100 flex flex-col'>
       {/* Header */}
       <div className='mb-4 flex justify-between items-center'>
         <h2 className='text-2xl font-semibold'>{title || 'Loading...'}</h2>
-        <Button onClick={handleDownloadPDF}>Export to PDF</Button>
+        <div className='flex gap-5'>
+          <Button
+            onClick={() => {
+              setDocumentContent(originalDocument ?? '');
+            }}
+            className={`
+              inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+              ${isOriginal ? 'hidden' : ''}
+              `}
+          >
+            Revert to Original
+          </Button>
+          <Button
+            hidden={isOriginal}
+            onClick={() => {
+              setShowOriginalContent((prev) => !prev);
+            }}
+            className={`inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                            ${isOriginal ? 'hidden' : ''}
+
+              `}
+          >
+            {showOriginalContent
+              ? 'Show Customized Content'
+              : 'Show Original Content'}
+          </Button>
+          <Button
+            onClick={handleDownloadPDF}
+            className='mr-5 inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white'
+          >
+            <Loader2
+              className={`mr-3 size-5 animate-spin ${exportLoading ? '' : 'hidden'}`}
+            />
+            Export to PDF
+          </Button>
+        </div>
       </div>
 
       {/* Main Content */}
       <div className='flex flex-grow gap-6 flex-col lg:flex-row'>
         {/* Document Viewer */}
-        <div className='lg:w-2/3 my-4 rounded-lg shadow-lg overflow-hidden'>
+        <div className='lg:w-2/3 my-4 rounded-lg shadow-lg overflow-hidden box'>
           {/* <CustomDocViewer documentContent={documentContent} /> */}
-          {/* <div className='max-h-[calc(100vh-300px)] overflow-auto'>
-            <div dangerouslySetInnerHTML={{ __html: documentContent }}></div>
-          </div> */}
-          <HtmlIframe htmlString={documentContent} />
+          <div className='ribbon'>
+            {isOriginal || showOriginalContent ? `Original` : `Customized`}
+          </div>
+
+          <HtmlIframe
+            loading={loading}
+            htmlString={
+              showOriginalContent ? (originalDocument ?? '') : documentContent
+            }
+          />
         </div>
         {/* Customization Panel */}
-        <CustomDocEditor handleCommandSubmit={handleCommandSubmit} />
+        <CustomDocEditor
+          handleCommandSubmit={handleCommandSubmit}
+          setShowOriginalContent={setShowOriginalContent}
+          showOriginalContent={showOriginalContent}
+        />
       </div>
     </div>
   );

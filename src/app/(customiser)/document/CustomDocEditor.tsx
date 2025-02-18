@@ -1,11 +1,15 @@
 import ChatInput from '@/app/(customiser)/document/[title]/ChatInput';
 import { Button, Input } from '@headlessui/react';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 export default function CustomDocumentEditor({
   handleCommandSubmit,
+  setShowOriginalContent,
+  showOriginalContent,
 }: {
   handleCommandSubmit: (message: string) => Promise<void>;
+  setShowOriginalContent: Dispatch<SetStateAction<boolean>>;
+  showOriginalContent: boolean;
 }) {
   const [fontSize, setFontSize] = useState(16); // Default font size
   const [textColor, setTextColor] = useState('black'); // Default text color
@@ -27,11 +31,7 @@ export default function CustomDocumentEditor({
     <div className='flex p-4 bg-gray-100'>
       {/* Right: Customization Panel */}
       <div className='p-4 ml-4 bg-white shadow-lg rounded-lg'>
-        <div className='bottom-10 right-4 flex gap-4 mt-4'>
-          <Button className='bg-blue-500 hover:bg-blue-600 rounded-lg p-2'>
-            Revert PDF
-          </Button>
-        </div>
+        <div className='bottom-10 right-4 flex gap-4 mt-4'></div>
         <h2 className='text-lg font-semibold mb-2'>Customization</h2>
         <div className='flex flex-col gap-4'>
           <label>
@@ -57,24 +57,7 @@ export default function CustomDocumentEditor({
             <Input type='file' />
           </label>
         </div>
-      </div>
-
-      {/* Bottom: Chat Commands & Generate PDF */}
-      <div className='absolute bottom-10 left-4 right-4 flex gap-4'>
-        <Input
-          className='flex-grow'
-          placeholder='Enter a command...'
-          value={command}
-          onChange={(e) => setCommand(e.target.value)}
-        />
-        <Button
-        // onClick={(e) => handleCommandSubmit}
-        >
-          Apply Command
-        </Button>
-        <Button className='bg-green-500 hover:bg-green-600'>
-          Generate PDF
-        </Button>
+        <ChatInput onSend={handleCommandSubmit} />
       </div>
     </div>
   );
