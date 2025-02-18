@@ -18,10 +18,12 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.21.0",
     "@headlessui/react": "^2.2.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.438.0",
     "next": "^14.2.23",
+    "puppeteer": "^24.2.1",
     "react": "^18.2.0",
     "react-doc-viewer": "^0.1.14",
     "react-dom": "^18.2.0",

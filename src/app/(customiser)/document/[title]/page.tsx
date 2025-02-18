@@ -16,6 +16,5 @@ export default async function DocumentPage({
     `${title}.html`,
   );
   const fileContent = await fs.readFile(filePath, 'utf8');
-
   return <CustomiserPanel originalDocument={fileContent} title={title} />;
 }

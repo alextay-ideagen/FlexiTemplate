@@ -1,13 +1,13 @@
+import ChatInput from '@/app/(customiser)/document/[title]/ChatInput';
 import { Button, Input } from '@headlessui/react';
 import { useState } from 'react';
 
-export default function CustomDocumentEditor() {
+export default function CustomDocumentEditor({
+  handleCommandSubmit,
+}: {
+  handleCommandSubmit: (message: string) => Promise<void>;
+}) {
   const [command, setCommand] = useState('');
-
-  const handleCommandSubmit = () => {
-    // Placeholder function to process command and update document content
-    console.log('Processing command:', command);
-  };
 
   return (
     <div className='flex p-4 bg-gray-100'>
@@ -28,20 +28,8 @@ export default function CustomDocumentEditor() {
             <Input type='file' />
           </label>
         </div>
-      </div>
 
-      {/* Bottom: Chat Commands & Generate PDF */}
-      <div className='absolute bottom-10 left-4 right-4 flex gap-4'>
-        <Input
-          className='flex-grow'
-          placeholder='Enter a command...'
-          value={command}
-          onChange={(e) => setCommand(e.target.value)}
-        />
-        <Button onClick={handleCommandSubmit}>Apply Command</Button>
-        <Button className='bg-green-500 hover:bg-green-600'>
-          Generate PDF
-        </Button>
+        <ChatInput onSend={handleCommandSubmit} />
       </div>
     </div>
   );

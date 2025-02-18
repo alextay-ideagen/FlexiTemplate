@@ -3,6 +3,16 @@ import Link from 'next/link';
 
 const docList = [
   {
+    title: 'Access Policy',
+    author: 'Test Alexander',
+    status: 'Draft',
+    thumbnail:
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    lastOpened: '3h ago',
+    lastOpenedDateTime: '2023-01-23T13:23Z',
+    htmlFile: 'AccessPolicy',
+  },
+  {
     title: 'Work Safe Policies',
     author: 'Leslie Alexander',
     status: 'Draft',
@@ -23,7 +33,7 @@ const docList = [
     htmlFile: 'CriticalIncident',
   },
   {
-    title: 'Student Duty of Care Module',
+    title: 'Student Duty Of Care Module',
     author: 'Dries Vincent',
     status: 'Review',
     thumbnail:
@@ -68,7 +78,7 @@ export default function DocumentList() {
       {docList.map((document) => (
         <li key={document.title}>
           <Link
-            href='/document/AccessPolicy'
+            href={`/document/${document.htmlFile}`}
             className='cursor-pointer flex justify-between gap-x-6 py-5 hover:bg-gray-50 px-5'
           >
             <div className='flex min-w-0 gap-x-4'>
