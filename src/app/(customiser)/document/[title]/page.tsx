@@ -16,14 +16,17 @@ export default function DocumentPage() {
   `);
 
   return (
-    <div className='p-6 bg-gray-100 flex flex-col'>
+    <div className='mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8'>
       {/* Header */}
-      <div className='mb-4 flex justify-between items-center'>
-        <h2 className='text-2xl font-semibold'>{title || 'Loading...'}</h2>
-        <Button onClick={() => alert('PDF Generation Coming Soon!')}>
-          Export to PDF
-        </Button>
-      </div>
+      <h1 className='text-3xl font-bold tracking-tight text-gray-900'>
+        {title || 'Loading...'}
+      </h1>
+      <Button
+        className='bg-green-500 hover:bg-green-600 rounded-lg p-2'
+        onClick={() => alert('PDF Generation Coming Soon!')}
+      >
+        Export to PDF
+      </Button>
 
       {/* Main Content */}
       {/* <CustomDocViewer /> */}

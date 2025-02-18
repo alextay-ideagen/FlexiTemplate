@@ -1,10 +1,10 @@
 'use client';
 
 import { Button } from '@headlessui/react';
-import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
 
 import CustomDocEditor from '@/app/(customiser)/document/CustomDocEditor';
-import dynamic from 'next/dynamic';
 const CustomDocViewer = dynamic(
   () => import('@/app/(customiser)/document/CustomDocViewer'),
   { ssr: false },

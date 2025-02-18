@@ -24,7 +24,7 @@ export default function CustomDocumentEditor({ onUpdateDocument }: any) {
   };
 
   return (
-    <div className='flex p-4 bg-gray-100'>
+    <div className='mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8'>
       {/* Right: Customization Panel */}
       <div className='p-4 ml-4 bg-white shadow-lg rounded-lg'>
         <div className='bottom-10 right-4 flex gap-4 mt-4'>

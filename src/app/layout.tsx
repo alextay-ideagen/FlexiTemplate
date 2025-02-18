@@ -63,7 +63,7 @@ export default function RootLayout({
           <section className='bg-white'>
             {children}
 
-            <footer className='absolute bottom-2 text-gray-700 flex justify-center w-full'>
+            <footer className='bottom-2 text-gray-700 flex justify-center w-full'>
               © {new Date().getFullYear()} By{' '}
               <UnderlineLink href='https://www.complispace.com.au/'>
                 Complispace Stark Team
