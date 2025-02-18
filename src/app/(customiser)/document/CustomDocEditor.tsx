@@ -1,6 +1,7 @@
-import ChatInput from '@/app/(customiser)/document/[title]/ChatInput';
-import { Button, Input } from '@headlessui/react';
+import { Input } from '@headlessui/react';
 import { Dispatch, SetStateAction, useState } from 'react';
+
+import ChatInput from '@/app/(customiser)/document/[title]/ChatInput';
 
 export default function CustomDocumentEditor({
   handleCommandSubmit,
@@ -28,12 +29,12 @@ export default function CustomDocumentEditor({
   };
 
   return (
-    <div className='mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8'>
+    <div className='max-w-7xl'>
       {/* Right: Customization Panel */}
-      <div className='p-4 ml-4 bg-white shadow-lg rounded-lg'>
+      <div className='p-4 bg-white shadow-lg rounded-lg'>
         <div className='bottom-10 right-4 flex gap-4 mt-4'></div>
         <h2 className='text-lg font-semibold mb-2'>Customization</h2>
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col gap-4 p-4'>
           <label>
             Font Size
             <Input

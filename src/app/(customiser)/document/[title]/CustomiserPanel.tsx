@@ -1,14 +1,13 @@
 'use client';
 
 import { Button } from '@headlessui/react';
+import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
 
+import HtmlIframe from '@/app/(customiser)/document/[title]/HtmlIframe';
 import CustomDocEditor from '@/app/(customiser)/document/CustomDocEditor';
 
-import HtmlIframe from '@/app/(customiser)/document/[title]/HtmlIframe';
 import { getUpdatedHtml } from './actions';
-import { ImSpinner } from 'react-icons/im';
-import { Loader, Loader2 } from 'lucide-react';
 
 export default function CustomiserPanel({
   originalDocument,
@@ -80,7 +79,7 @@ export default function CustomiserPanel({
   };
   const isOriginal = originalDocument === documentContent;
   return (
-    <div className='p-6 bg-gray-100 flex flex-col'>
+    <div className='mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8'>
       {/* Header */}
       <div className='mb-4 flex justify-between items-center'>
         <h2 className='text-2xl font-semibold'>{title || 'Loading...'}</h2>
@@ -123,9 +122,9 @@ export default function CustomiserPanel({
       </div>
 
       {/* Main Content */}
-      <div className='flex flex-grow gap-6 flex-col lg:flex-row'>
+      <div className='flex flex-grow flex-col gap-4 lg:flex-col-reverse'>
         {/* Document Viewer */}
-        <div className='lg:w-2/3 my-4 rounded-lg shadow-lg overflow-hidden box'>
+        <div className='my-4 rounded-lg shadow-lg overflow-hidden box'>
           {/* <CustomDocViewer documentContent={documentContent} /> */}
           <div className='ribbon'>
             {isOriginal || showOriginalContent ? `Original` : `Customized`}
