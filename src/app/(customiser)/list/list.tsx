@@ -70,6 +70,25 @@ const docList = [
     lastOpened: null,
     htmlFile: 'RiskRating',
   },
+  {
+    title: 'Risk Categories Manifest',
+    author: 'Thomas Richard',
+    status: 'Approved',
+    thumbnail:
+      'https://images.unsplash.com/photo-1733796941440-9935f13a1cec?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    lastOpened: '3h ago',
+    lastOpenedDateTime: '2023-01-23T13:23Z',
+    htmlFile: 'RiskCategoriesManifest',
+  },
+  {
+    title: 'Master Excursion Risk Assessment',
+    author: 'Louisa Johnson',
+    status: 'Draft',
+    thumbnail:
+      'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    lastOpened: '3h ago',
+    htmlFile: 'MasterExcursion',
+  },
 ];
 
 export default function DocumentList() {
