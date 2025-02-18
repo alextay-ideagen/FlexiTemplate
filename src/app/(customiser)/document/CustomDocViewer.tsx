@@ -1,49 +1,67 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import DocViewer, { HTMLRenderer } from 'react-doc-viewer';
 
-interface CustomDocViewerProps {
-  documentContent?: string;
-}
+import CustomDocumentEditor from '@/app/(customiser)/document/CustomDocEditor';
 
-const CustomDocViewer: React.FC<CustomDocViewerProps> = ({
-  documentContent,
-}) => {
-  const [documentUri, setDocumentUri] = useState<string | null>(null);
+function CustomDocViewer() {
+  const docs = [
+    { uri: '/template/AccessPolicy.html' }, // Local File
+  ];
 
+  // State for holding document content and style
+  const [htmlContent, setHtmlContent] = useState<string>('');
+  const [fontSize, setFontSize] = useState(16); // Default font size
+  const [textColor, setTextColor] = useState('black'); // Default text color
+
+  // Fetch HTML content
   useEffect(() => {
-    if (documentContent) {
-      const blob = new Blob([documentContent], { type: 'text/html' });
-      const url = URL.createObjectURL(blob);
-      setDocumentUri(url);
+    fetch('/template/AccessPolicy.html')
+      .then((response) => response.text())
+      .then((data) => {
+        setHtmlContent(data);
+      })
+      .catch((error) => {
+        console.error('Error loading HTML content:', error);
+      });
+  }, []);
 
-      // Clean up the URL object when the component unmounts
-      return () => URL.revokeObjectURL(url);
-    }
-  }, [documentContent]);
+  // Function to update styles (font size and text color)
+  const handleUpdateDocument = (newFontSize: number, newTextColor: string) => {
+    setFontSize(newFontSize);
+    setTextColor(newTextColor);
+  };
 
-  if (typeof window === 'undefined' || documentContent === undefined) {
+  if (typeof window === 'undefined') {
     return null;
   }
 
+  // Apply styles dynamically to the preview
+  const previewStyle = {
+    fontSize: `${fontSize}px`,
+    color: textColor,
+  };
+
   return (
-    <DocViewer
-      config={{ header: { disableHeader: true } }}
-      className='min-h-[calc(100vh-300px)]'
-      documents={documentUri ? [{ uri: documentUri, fileType: 'html' }] : []}
-      pluginRenderers={[HTMLRenderer]}
-      theme={{
-        primary: '#5296d8',
-        secondary: '#ffffff',
-        tertiary: '#5296d899',
-        text_primary: '#ffffff',
-        text_secondary: '#5296d8',
-        text_tertiary: '#00000099',
-        disableThemeScrollbar: false,
-      }}
-    />
+    <div className='flex flex-grow gap-6'>
+      {/* Preview the HTML content with applied styles */}
+      <div
+        className='p-4 bg-white shadow-lg rounded-lg'
+        style={previewStyle}
+        dangerouslySetInnerHTML={{ __html: htmlContent }}
+      ></div>
+
+      {/* Pass down the handleUpdateDocument function to the editor */}
+      <CustomDocumentEditor onUpdateDocument={handleUpdateDocument} />
+
+      {/* DocViewer component for rendering documents */}
+      {/* <DocViewer
+        className="mt-4"
+        documents={docs}
+        pluginRenderers={DocViewerRenderers}
+      /> */}
+    </div>
   );
-};
+}
 
 export default CustomDocViewer;
