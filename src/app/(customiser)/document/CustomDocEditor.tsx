@@ -1,11 +1,7 @@
+import { Button, Input } from '@headlessui/react';
 import { useState } from 'react';
 
-import { Button, Input } from '@headlessui/react';
-
 export default function CustomDocumentEditor() {
-  const [documentContent, setDocumentContent] = useState(
-    '<h1>Sample Document</h1><p>This is a customizable document.</p>',
-  );
   const [command, setCommand] = useState('');
 
   const handleCommandSubmit = () => {
