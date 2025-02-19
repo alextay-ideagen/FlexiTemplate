@@ -37,7 +37,6 @@ export default function CustomiserPanel({
     console.log('Received response from server:', result);
 
     setDocumentContent(result);
-
     setLoading(false);
   };
 
@@ -77,6 +76,7 @@ export default function CustomiserPanel({
 
     setExportLoading(false);
   };
+
   const isOriginal = originalDocument === documentContent;
   return (
     <div className='mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8'>
@@ -128,10 +128,11 @@ export default function CustomiserPanel({
           handleCommandSubmit={handleCommandSubmit}
           setShowOriginalContent={setShowOriginalContent}
           showOriginalContent={showOriginalContent}
+          documentContent={documentContent}
+          setDocumentContent={setDocumentContent}
         />
         {/* Document Viewer */}
         <div className='my-4 rounded-lg shadow-lg overflow-hidden box'>
-          {/* <CustomDocViewer documentContent={documentContent} /> */}
           <div className='ribbon'>
             {isOriginal || showOriginalContent ? `Original` : `Customized`}
           </div>
