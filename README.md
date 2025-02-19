@@ -60,3 +60,5 @@ To use the document styling editor, follow these steps:
    Export to PDF once document is ready
 
 This intuitive interface allows you to easily customize document styles with the help of AI-driven insights.
+
+![Alt text](<public/Document Stylist Flowchart.png>)
