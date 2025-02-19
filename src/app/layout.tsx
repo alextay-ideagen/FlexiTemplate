@@ -58,7 +58,10 @@ export default function RootLayout({
 
             <footer className='bottom-2 text-gray-700 flex justify-center w-full py-2'>
               © {new Date().getFullYear()} By{' '}
-              <UnderlineLink href='https://www.complispace.com.au/'>
+              <UnderlineLink
+                className='pl-1'
+                href='https://www.complispace.com.au/'
+              >
                 Complispace Stark Team
               </UnderlineLink>
             </footer>
