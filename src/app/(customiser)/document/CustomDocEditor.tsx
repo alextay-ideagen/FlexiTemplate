@@ -12,11 +12,14 @@ const fontOptions = [
   'Tahoma',
   'Trebuchet MS',
   'Lucida Sans',
-  'Comic Sans MS', // Feel free to add more options here
+  'Comic Sans MS',
   'Helvetica',
 ];
 
 const lineOptions = ['1.0', '1.15', '1.2', '1.5', '1.8', '2.0', '2.5'];
+
+const borderStyles = ['none', 'solid', 'dashed', 'dotted'];
+const shadowStyles = ['none', 'small', 'medium', 'large'];
 
 export default function CustomDocEditor({
   handleCommandSubmit,
@@ -31,16 +34,20 @@ export default function CustomDocEditor({
   documentContent: string;
   setDocumentContent: Dispatch<SetStateAction<string>>;
 }) {
-  const [fontSize, setFontSize] = useState(16); // Default font size
-  const [textColor, setTextColor] = useState('black'); // Default text color
-  const [fontType, setFontType] = useState('Arial'); // Default font type
-  const [lineHeight, setLineHeight] = useState('1.15'); // Default line height
+  const [fontSize, setFontSize] = useState(16);
+  const [textColor, setTextColor] = useState('black');
+  const [fontType, setFontType] = useState('Arial');
+  const [lineHeight, setLineHeight] = useState('1.15');
   const [fontStyle, setFontStyle] = useState<
     'normal' | 'italic' | 'bold' | 'strong'
-  >('normal'); // Default font style
+  >('normal');
   const [headingAlignment, setHeadingAlignment] = useState<
     'left' | 'center' | 'right' | 'justify'
-  >('left'); // Default heading alignment
+  >('left');
+
+  const [borderStyle, setBorderStyle] = useState('none');
+  const [borderColor, setBorderColor] = useState('black');
+  const [boxShadow, setBoxShadow] = useState('none');
 
   const handleFontSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
@@ -91,6 +98,41 @@ export default function CustomDocEditor({
     });
   };
 
+  const handleBorderStyleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const style = e.target.value;
+    setBorderStyle(style);
+    updateContentStyles({ borderStyle: style });
+    updateHeadingStyles({ borderStyle: style });
+  };
+
+  const handleBorderColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const color = e.target.value;
+    setBorderColor(color);
+    updateContentStyles({ borderColor: color });
+    updateHeadingStyles({ borderColor: color });
+  };
+
+  const handleBoxShadowChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const shadow = e.target.value;
+    setBoxShadow(shadow);
+    updateContentStyles({ boxShadow: getShadowStyle(shadow) });
+    updateHeadingStyles({ boxShadow: getShadowStyle(shadow) });
+  };
+
+  // Function to get box-shadow style based on the selected option
+  const getShadowStyle = (shadow: string): string => {
+    switch (shadow) {
+      case 'small':
+        return '0 1px 3px rgba(0, 0, 0, 0.1)';
+      case 'medium':
+        return '0 4px 6px rgba(0, 0, 0, 0.1)';
+      case 'large':
+        return '0 10px 20px rgba(0, 0, 0, 0.1)';
+      default:
+        return 'none';
+    }
+  };
+
   const updateHeadingStyles = (newStyles: { [key: string]: string }) => {
     let updatedDocument = documentContent;
     const docElement = new DOMParser().parseFromString(
@@ -99,12 +141,18 @@ export default function CustomDocEditor({
     );
 
     // Apply styles to all heading tags (h1, h2, h3, etc.)
-    const headingTags: NodeListOf<HTMLElement> = docElement.querySelectorAll(
-      'h1, h2, h3, h4, h5, h6',
-    );
+    const headingTags = docElement.querySelectorAll('h1, h2, h3, h4, h5, h6');
     headingTags.forEach((headingTag) => {
       Object.keys(newStyles).forEach((key) => {
         headingTag.style[key as any] = newStyles[key];
+      });
+    });
+
+    // Apply styles to all table elements (to enhance shadow)
+    const tableTags = docElement.querySelectorAll('table');
+    tableTags.forEach((tableTag) => {
+      Object.keys(newStyles).forEach((key) => {
+        tableTag.style[key as any] = newStyles[key];
       });
     });
 
@@ -121,11 +169,18 @@ export default function CustomDocEditor({
     );
 
     // Apply styles to all paragraph and text elements
-    const textTags: NodeListOf<HTMLElement> =
-      docElement.querySelectorAll('p, li, span, div');
+    const textTags = docElement.querySelectorAll('p, li, span, div');
     textTags.forEach((textTag) => {
       Object.keys(newStyles).forEach((key) => {
         textTag.style[key as any] = newStyles[key];
+      });
+    });
+
+    // Apply styles to all table elements (to enhance shadow)
+    const tableTags = docElement.querySelectorAll('table');
+    tableTags.forEach((tableTag) => {
+      Object.keys(newStyles).forEach((key) => {
+        tableTag.style[key as any] = newStyles[key];
       });
     });
 
@@ -215,6 +270,47 @@ export default function CustomDocEditor({
               <option value='center'>Center</option>
               <option value='right'>Right</option>
               <option value='justify'>Justify</option>
+            </select>
+          </label>
+          {/* Border and Shadow Options */}
+          <label>
+            Border Style
+            <select
+              value={borderStyle}
+              onChange={handleBorderStyleChange}
+              className='ml-4 p-2 border border-gray-300 rounded'
+              style={{ width: '6rem' }}
+            >
+              {borderStyles.map((style) => (
+                <option key={style} value={style}>
+                  {style}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Border Color
+            <Input
+              type='text'
+              value={borderColor}
+              onChange={handleBorderColorChange}
+              placeholder='e.g., red'
+              className='ml-4'
+            />
+          </label>
+          <label>
+            Table Box Shadow
+            <select
+              value={boxShadow}
+              onChange={handleBoxShadowChange}
+              className='ml-4 p-2 border border-gray-300 rounded'
+              style={{ width: '6rem' }}
+            >
+              {shadowStyles.map((style) => (
+                <option key={style} value={style}>
+                  {style}
+                </option>
+              ))}
             </select>
           </label>
         </div>

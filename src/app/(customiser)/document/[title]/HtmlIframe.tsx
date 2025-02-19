@@ -1,4 +1,3 @@
-import { LoaderCircle } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import HashLoader from 'react-spinners/HashLoader';
 
