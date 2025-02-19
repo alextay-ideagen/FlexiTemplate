@@ -162,7 +162,8 @@ export default function CustomDocEditor({
       documentContent,
       'text/html',
     );
-    const elements = docElement.querySelectorAll(selector);
+    const elements: NodeListOf<HTMLElement> =
+      docElement.querySelectorAll(selector);
     elements.forEach((el) => {
       Object.assign(el.style, styles);
     });
