@@ -1,55 +1,66 @@
 'use client';
 
-import * as React from 'react';
 import '@/lib/env';
 
 import ArrowLink from '@/components/links/ArrowLink';
 import ButtonLink from '@/components/links/ButtonLink';
-import UnstyledLink from '@/components/links/UnstyledLink';
-
-/**
- * SVGR Support
- * Caveat: No React Props Type.
- *
- * You can override the next-env if the type is important to you
- * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
- */
-import Logo from '~/svg/Logo.svg';
-
-// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
-// Before you begin editing, follow all comments with `STARTERCONF`,
-// to customize the default configuration.
+// import Logo from '~/svg/Logo.svg';
+import Image from 'next/image';
 
 export default function HomePage() {
   return (
     <div className='layout relative flex min-h-screen flex-col items-center justify-center py-12 text-center'>
-      <Logo className='w-16' />
-      <h1 className='mt-4'>Flexi Template Starter</h1>
-      <p className='mt-2 text-sm text-gray-800'>
-        A simple demo built using Next.js, Tailwind CSS, and TypeScript
+      <Image
+        src={`/images/landing.png`}
+        alt='Logo'
+        className='rounded-lg'
+        width={200}
+        height={200}
+      />
+
+      <h1 className='mt-4 text-2xl font-bold text-gray-900'>
+        Document Stylist
+      </h1>
+      <p className='mt-2 text-base text-gray-700 max-w-lg'>
+        Revolutionizing document formatting with AI-powered styling. Customize
+        templates, ensure brand consistency, and export professional PDFs
+        effortlessly.
       </p>
-      <p className='mt-2 text-sm text-gray-700'>
-        <ArrowLink href='https://github.com/alextay-ideagen/FlexiTemplate'>
-          See the repository
+
+      <div className='mt-6 flex flex-col items-center space-y-4'>
+        <ButtonLink
+          className='px-6 py-3 text-lg'
+          href='/list'
+          variant='primary'
+        >
+          Try Document Stylist
+        </ButtonLink>
+        <ArrowLink href='https://github.com/alextay-ideagen/DocumentStylist'>
+          View the GitHub Repository
         </ArrowLink>
-      </p>
+      </div>
 
-      <ButtonLink className='mt-6' href='/list' variant='light'>
-        Get started
-      </ButtonLink>
+      <div className='mt-8 flex flex-col items-center space-y-2 text-sm text-gray-600'>
+        <p>Key Features:</p>
+        <ul className='list-disc text-left'>
+          <li>AI-powered style recommendations</li>
+          <li>Support customization using natual language</li>
+          <li>Multi-version previews</li>
+        </ul>
+      </div>
 
+      {/* 
       <UnstyledLink
         href='https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Ftheodorusclarence%2Fts-nextjs-tailwind-starter'
-        className='mt-4'
+        className='mt-6'
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           width='92'
           height='32'
           src='https://vercel.com/button'
           alt='Deploy with Vercel'
         />
-      </UnstyledLink>
+      </UnstyledLink> */}
     </div>
   );
 }

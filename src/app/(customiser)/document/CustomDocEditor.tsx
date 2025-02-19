@@ -141,7 +141,9 @@ export default function CustomDocEditor({
     );
 
     // Apply styles to all heading tags (h1, h2, h3, etc.)
-    const headingTags = docElement.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    const headingTags: NodeListOf<HTMLElement> = docElement.querySelectorAll(
+      'h1, h2, h3, h4, h5, h6',
+    );
     headingTags.forEach((headingTag) => {
       Object.keys(newStyles).forEach((key) => {
         headingTag.style[key as any] = newStyles[key];
@@ -169,7 +171,8 @@ export default function CustomDocEditor({
     );
 
     // Apply styles to all paragraph and text elements
-    const textTags = docElement.querySelectorAll('p, li, span, div');
+    const textTags: NodeListOf<HTMLElement> =
+      docElement.querySelectorAll('p, li, span, div');
     textTags.forEach((textTag) => {
       Object.keys(newStyles).forEach((key) => {
         textTag.style[key as any] = newStyles[key];
