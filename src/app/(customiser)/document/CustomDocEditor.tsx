@@ -121,7 +121,8 @@ export default function CustomDocEditor({
     );
 
     // Apply styles to all paragraph and text elements
-    const textTags = docElement.querySelectorAll('p, li, span, div');
+    const textTags: NodeListOf<HTMLElement> =
+      docElement.querySelectorAll('p, li, span, div');
     textTags.forEach((textTag) => {
       Object.keys(newStyles).forEach((key) => {
         textTag.style[key as any] = newStyles[key];
