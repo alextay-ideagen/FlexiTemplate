@@ -1,5 +1,9 @@
 import { NextResponse } from 'next/server';
-import puppeteer from 'puppeteer';
+import * as puppeteer from 'puppeteer';
+
+import chromium from '@sparticuz/chromium';
+import puppeteerCore from 'puppeteer-core';
+import type { Browser } from 'puppeteer-core';
 
 export const maxDuration = 60; // This function can run for a maximum of 60 seconds
 
@@ -26,7 +30,25 @@ export async function POST(req: Request) {
  * @returns PDF file as a response
  */
 async function generatePDF(html: string) {
-  const browser = await puppeteer.launch({ headless: true });
+  let browser: puppeteer.Browser | Browser;
+
+  if (process.env.NODE_ENV === 'production') {
+    browser = await puppeteerCore.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+    });
+  } else {
+    browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      headless: true,
+    });
+  }
+
+  if (!browser) {
+    throw new Error('Failed to launch browser');
+  }
   const page = await browser.newPage();
 
   await page.setContent(html, { waitUntil: 'networkidle0' });

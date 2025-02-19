@@ -26,14 +26,13 @@ export async function generateBedrockResponse({
       
       Strict Rules:
       1. ONLY return the updated HTML. Do not include explanations.
-      2. Ensure the HTML remains valid and well-formatted.
       
       Example:
       User: Change the title to "Updated Page"
       Original HTML: <html><head><title>Old Title</title></head><body></body></html>
       Output: <html><head><title>Updated Page</title></head><body></body></html>
 
-      If the instruction is unclear, make a best guess but never add extra text.
+      Do not exclude any html content, e.g.<html>, <head>, <body>, etc.
     `;
 
     // Format the user prompt
@@ -46,7 +45,7 @@ export async function generateBedrockResponse({
     // Send request to Anthropic Claude model
     const message = await client.messages.create({
       model: 'anthropic.claude-3-5-sonnet-20240620-v1:0',
-      max_tokens: 2048,
+      max_tokens: 4000,
       system: [{ type: 'text', text: systemPrompt }],
       messages: [{ role: 'user', content: userPrompt }],
     });
