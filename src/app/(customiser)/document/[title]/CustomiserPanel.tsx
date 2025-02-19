@@ -6,9 +6,8 @@ import { useEffect, useState } from 'react';
 
 import HtmlIframe from '@/app/(customiser)/document/[title]/HtmlIframe';
 import CustomDocEditor from '@/app/(customiser)/document/CustomDocEditor';
-
-import { getUpdatedHtml } from '@/app/actions/google';
 import { generateBedrockResponse } from '@/app/actions/anthropic';
+import { getUpdatedHtml } from '@/app/actions/google';
 
 export default function CustomiserPanel({
   originalDocument,
@@ -32,6 +31,32 @@ export default function CustomiserPanel({
   const [currentModel, setCurrentModel] = useState<'claude' | 'gemini' | null>(
     null,
   );
+
+  const [fontSize, setFontSize] = useState(16);
+  const [textColor, setTextColor] = useState('black');
+  const [fontType, setFontType] = useState('Arial');
+  const [lineHeight, setLineHeight] = useState('1.15');
+  const [fontStyle, setFontStyle] = useState<
+    'normal' | 'italic' | 'bold' | 'strong'
+  >('normal');
+  const [headingAlignment, setHeadingAlignment] = useState<
+    'left' | 'center' | 'right' | 'justify'
+  >('left');
+  const [borderStyle, setBorderStyle] = useState('none');
+  const [borderColor, setBorderColor] = useState('black');
+  const [boxShadow, setBoxShadow] = useState('none');
+
+  const resetCustomizations = () => {
+    setFontSize(16);
+    setTextColor('black');
+    setFontType('Arial');
+    setLineHeight('1.15');
+    setFontStyle('normal');
+    setHeadingAlignment('left');
+    setBorderStyle('none');
+    setBorderColor('black');
+    setBoxShadow('none');
+  };
 
   const handleCommandSubmit = async (message: string) => {
     if (!message) return;
@@ -148,6 +173,7 @@ export default function CustomiserPanel({
           <Button
             onClick={() => {
               setDocumentContent(originalDocument ?? '');
+              resetCustomizations(); // Reset the customization settings
             }}
             className={`
               inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
@@ -191,6 +217,25 @@ export default function CustomiserPanel({
           showOriginalContent={showOriginalContent}
           documentContent={documentContent}
           setDocumentContent={setDocumentContent}
+          resetCustomizations={resetCustomizations} // Pass reset function to CustomDocEditor
+          fontSize={fontSize}
+          setFontSize={setFontSize}
+          textColor={textColor}
+          setTextColor={setTextColor}
+          fontType={fontType}
+          setFontType={setFontType}
+          lineHeight={lineHeight}
+          setLineHeight={setLineHeight}
+          fontStyle={fontStyle}
+          setFontStyle={setFontStyle}
+          headingAlignment={headingAlignment}
+          setHeadingAlignment={setHeadingAlignment}
+          borderStyle={borderStyle}
+          setBorderStyle={setBorderStyle}
+          borderColor={borderColor}
+          setBorderColor={setBorderColor}
+          boxShadow={boxShadow}
+          setBoxShadow={setBoxShadow}
         />
         {/* Document Viewer */}
         <div className='relative my-4 rounded-lg shadow-lg overflow-hidden box'>
