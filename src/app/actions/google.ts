@@ -57,24 +57,35 @@ export async function getUpdatedHtml({
   return updatedHtml;
 }
 
+// Function to check if the prompt is valid
 export async function checkPromptValidity({ prompt }: { prompt: string }) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error('API key is missing');
   }
+
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({
     model: 'gemini-2.0-flash',
     systemInstruction: `
-      You are an AI that edits HTML documents. 
-      The prompt is to modify the given HTML based on the user's instruction.
-      Your job is to check if the prompt is a valid request to modify html styling or not.
-      
-      Strict Rules:
-      1. ONLY return valid or invalid. Do not include explanations.
+      You are an AI that validates HTML modification requests.
+      Your job is to check if the given prompt is a valid request to modify HTML.
+
+      Rules:
+      1. Return "valid" if the request clearly asks for a change in HTML structure or styling.
+      2. Return "invalid" if the request is ambiguous, off-topic, or does not modify HTML.
+      3. DO NOT provide any explanation—only return "valid" or "invalid".
+
+      Examples:
+      - "Change the title to 'New Page'" → valid
+      - "Make the background color blue" → valid
+      - "Tell me a joke" → invalid
+      - "What is the weather today?" → invalid
     `,
   });
+
   const result = await model.generateContent(prompt);
-  const responseText = result.response.text();
-  return responseText;
+  const responseText = result.response.text().trim().toLowerCase();
+
+  return responseText === 'valid' ? 'valid' : 'invalid';
 }
