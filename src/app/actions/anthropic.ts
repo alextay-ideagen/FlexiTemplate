@@ -1,7 +1,6 @@
 'use server';
 
 import AnthropicBedrock from '@anthropic-ai/bedrock-sdk';
-export const maxDuration = 60; // This function can run for a maximum of 60 seconds
 
 // Server Action function to generate AI response
 export async function generateBedrockResponse({
