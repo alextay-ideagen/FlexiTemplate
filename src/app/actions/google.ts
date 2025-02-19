@@ -1,6 +1,7 @@
 'use server';
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
+export const maxDuration = 60; // This function can run for a maximum of 60 seconds
 
 export async function getUpdatedHtml({
   prompt,
@@ -14,8 +15,8 @@ export async function getUpdatedHtml({
     throw new Error('API key is missing');
   }
 
-  const isPromptValid = await checkPromptValidity({ prompt });
-  console.log('isPromptValid', isPromptValid);
+  // const isPromptValid = await checkPromptValidity({ prompt });
+  // console.log('isPromptValid', isPromptValid);
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({
     model: 'gemini-2.0-flash',
