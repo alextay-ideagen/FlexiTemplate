@@ -19,8 +19,8 @@ To get started with this project, follow these steps:
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/theodorusclarence/ts-nextjs-tailwind-starter.git
-   cd ts-nextjs-tailwind-starter
+   git clone git@github.com:alextay-ideagen/FlexiTemplate.git
+   cd FlexiTemplate
    ```
 
 2. **Install the dependencies**:
